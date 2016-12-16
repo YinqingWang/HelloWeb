@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- scan the package and the sub package -->
+    <!-- User @Controller, @Service... annotations -->
+    <context:component-scan base-package="com.panghai.entjee.controller"/>
+
+    <!-- Use spring servlet for all requests, including static resources -->
+    <mvc:default-servlet-handler />
+
+    <!-- Use @MVC annotations -->
+    <mvc:annotation-driven />
+
+    <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver interface -->
+    <bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+
+    <!-- Thymeleaf Template Engine (Spring4-specific version) -->
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolvers" ref="templateResolver" />
+
+		  <!-- Enabling the SpringEL compiler with Spring 4.2.4 or newer can speed up  -->
+		  <!-- execution in most scenarios, but might be incompatible with specific    -->
+		  <!-- cases when expressions in one template are reused across different data -->
+		  <!-- ypes, so this flag is "false" by default for safer backwards            -->
+		  <!-- compatibility.                                                          -->
+		  <property name="enableSpringELCompiler" value="true" />
+  
+    </bean>
+
+    <!-- Thymeleaf Template Resolver -->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <!-- <property name="prefix" value="/WEB-INF/templates/" />  -->
+        <property name="prefix" value="/WEB-INF/Pages/" />
+        <property name="suffix" value=".html" />
+
+        <!-- HTML is the default value, added here for the sake of clarity.          -->
+        <property name="templateMode" value="HTML" />
+
+        <!-- Template cache is true by default. Set to false if you want             -->
+        <!-- templates to be automatically updated when modified.                    -->
+        <property name="cacheable" value="true" />
+
+    </bean>
+
+    <!-- configure the InternalResourceViewResolver -->
+<!--
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+            id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+-->
+
+</beans>
+
