@@ -17,6 +17,11 @@
     <!-- Use spring servlet for all requests, including static resources -->
     <mvc:default-servlet-handler />
 
+	 <!-- <mvc:resources location="/WEB-INF/Static/" mapping="/static/**"/> -->
+    <mvc:resources mapping="/js/**"  location="/WEB-INF/Static/js/" />
+    <mvc:resources mapping="/css/**" location="/WEB-INF/Static/css/" />
+    <mvc:resources mapping="/images/**" location="/WEB-INF/Static/images/" />
+
     <!-- Use @MVC annotations -->
     <mvc:annotation-driven />
 
